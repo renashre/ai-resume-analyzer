@@ -21,14 +21,11 @@ Resume:
 """
 
     response = client.messages.create(
-        model="claude-instant-1.2",
+        model="claude-3-sonnet",  # ✅ Updated
         max_tokens=1024,
         temperature=0.7,
         system="You are an expert resume reviewer for tech roles.",
-        messages=[
-            {"role": "user", "content": prompt}
-        ]
+        messages=[{"role": "user", "content": prompt}]
     )
 
-    # ✅ Extract the full message content safely
     return response.content[0].text if response.content else "No response from Claude"
