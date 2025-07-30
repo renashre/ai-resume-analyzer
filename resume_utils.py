@@ -21,8 +21,7 @@ Resume:
 """
 
     response = client.messages.create(
-        model="claude-2.1"
-,
+        model="claude-instant-1.2",
         max_tokens=1024,
         temperature=0.7,
         system="You are an expert resume reviewer for tech roles.",
