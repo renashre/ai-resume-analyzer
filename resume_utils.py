@@ -8,21 +8,23 @@ def analyze_resume_with_claude(resume_text, target_role):
 
     client = anthropic.Anthropic(api_key=api_key)
 
-    prompt = (
-        "\n\nHuman: "
-        f"You're a helpful career coach. Analyze the resume below and give detailed feedback "
-        f"tailored to the target role '{target_role}'. "
-        f"Point out what’s strong, what can be improved, and whether it matches the job.\n\n"
-        f"Resume:\n{resume_text}\n\n"
-        "\n\nAssistant:"
-    )
+    prompt = f"""
+You are an expert tech recruiter. A candidate has submitted their resume and specified the role they are targeting: '{target_role}'.
 
-    response = client.completions.create(
-        model="claude-2.1",
-        prompt=prompt,
-        max_tokens=1000,
-        temperature=0.7,
-        stop_sequences=["\n\nHuman:"]
-    )
+Please do the following:
+1. Provide 3 specific strengths from the resume that match this role.
+2. Suggest 3 improvements they can make to be a stronger candidate.
+3. Rate how well this resume fits the role on a scale from 1 to 10 and justify your score.
 
-    return response.completion
+Resume:
+{resume_text}
+"""
+    response = client.messages.create(
+    model="claude-3-sonnet-20240229",
+    max_tokens=1024,
+    temperature=0.7,
+    system="You are an expert resume reviewer for tech roles.",
+    messages=[{"role": "user", "content": prompt}]
+)
+
+    return response.content[0].text  # Claude responses are wrapped like this in the SDK
