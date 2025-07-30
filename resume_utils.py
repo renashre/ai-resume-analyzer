@@ -19,12 +19,16 @@ Please do the following:
 Resume:
 {resume_text}
 """
-    response = client.messages.create(
-    model="claude-3-sonnet-20240229",
-    max_tokens=1024,
-    temperature=0.7,
-    system="You are an expert resume reviewer for tech roles.",
-    messages=[{"role": "user", "content": prompt}]
-)
 
-    return response.content[0].text  # Claude responses are wrapped like this in the SDK
+    response = client.messages.create(
+        model="claude-3-sonnet-20240229",
+        max_tokens=1024,
+        temperature=0.7,
+        system="You are an expert resume reviewer for tech roles.",
+        messages=[
+            {"role": "user", "content": prompt}
+        ]
+    )
+
+    # ✅ Extract the full message content safely
+    return response.content[0].text if response.content else "No response from Claude"
