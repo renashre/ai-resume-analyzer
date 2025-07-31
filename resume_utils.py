@@ -21,7 +21,7 @@ Resume:
 """
 
     response = client.messages.create(
-        model="claude-3.5-sonnet-20240620",  # ← USE THIS or haiku
+        model="claude-3-haiku-20240301",  # ← USE THIS or haiku
         max_tokens=1024,
         temperature=0.7,
         system="You are an expert resume reviewer for tech roles.",
