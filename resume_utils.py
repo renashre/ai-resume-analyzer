@@ -21,11 +21,11 @@ Resume:
 """
 
     response = client.messages.create(
-        model="claude-3-sonnet",  # ✅ Updated
+        model="claude-3.5-sonnet-20240620",  # ← USE THIS or haiku
         max_tokens=1024,
         temperature=0.7,
         system="You are an expert resume reviewer for tech roles.",
         messages=[{"role": "user", "content": prompt}]
     )
 
-    return response.content[0].text if response.content else "No response from Claude"
+    return response.content[0].text
